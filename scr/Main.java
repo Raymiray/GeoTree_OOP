@@ -8,32 +8,63 @@ import ru.gb.family_tree.writer.FileHandler;
 
 import java.time.LocalDate;
 
-/**
- * Главный класс для тестирования работы семейного древа.
- */
+
 public class Main {
     public static void main(String[] args) {
 
-        // Адрес файла для записи/чтения:
-        String path = "src/ru/gb/family_tree/writer/family_tree.out";
+//        Адреса файла для записи/чтения:
+        String path1 = "src/ru/gb/family_tree/writer/family_tree_sorted_by_name.out";
+        String path2 = "src/ru/gb/family_tree/writer/family_tree_sorted_by_age.out";
 
-        // Инициализируем экземпляр класса для записи/чтения:
+//        Инициализируем экземпляр класса для записи/чтения:
         FileHandler fileHandler = new FileHandler();
 
-        // Инициализируем экземпляр класса семейного древа:
+//        Инициализируем экземпляр класса семейного древа:
         FamilyTree familyTree = testTree();
 
         System.out.println("\nДанные из семейного древа ДО чтения из файла:\n");
         System.out.println(familyTree);
 
-        // Запись в файл:
-        fileHandler.write(familyTree, path);
+        System.out.println("---------");
+        System.out.println("Sorted by Name:\n");
 
-        // Чтение из файла:
-        FamilyTree familyTreeRestored = (FamilyTree) fileHandler.read(path);
-        System.out.println("\nДанные из семейного древа ПОСЛЕ чтения из файла:\n");
-        System.out.println(familyTreeRestored);
+        familyTree.sortByName();
+        System.out.println(familyTree);
+
+//  ---------------------------------------
+//        Запись в файл:
+        fileHandler.write(familyTree, path1);
+
+//  ------------------------------------
+
+        System.out.println("Sorted by Age:\n");
+
+        familyTree.sortByAge();
+        System.out.println(familyTree);
+
+//  ---------------------------------------
+//        Запись в файл:
+        fileHandler.write(familyTree, path2);
+
+//  ------------------------------------
+
+//  ------------------------------------
+
+//        Чтение из файла:
+        FamilyTree familyTreeRestored1 = (FamilyTree) fileHandler.read(path1);
+        System.out.println("\nДанные из семейного древа c сортировкой по имени\nПОСЛЕ чтения из файла:\n");
+        System.out.println(familyTreeRestored1);
+
+//  ------------------------------------
+
+//        Чтение из файла:
+        FamilyTree familyTreeRestored2 = (FamilyTree) fileHandler.read(path2);
+        System.out.println("\nДанные из семейного древа c сортировкой по возрасту\nПОСЛЕ чтения из файла:\n");
+        System.out.println(familyTreeRestored2);
     }
+
+//  ---------------------------------------------
+
 
     static FamilyTree testTree() {
         FamilyTree familyTree = new FamilyTree();
