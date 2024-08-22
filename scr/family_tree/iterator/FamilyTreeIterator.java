@@ -1,24 +1,27 @@
 package ru.gb.family_tree.iterator;
 
-import ru.gb.family_tree.human.Human;
+import ru.gb.family_tree.family_tree.FamilyTreeElement;
 
 import java.util.Iterator;
 import java.util.List;
 
-
-public class FamilyTreeIterator implements Iterator<Human> {
+/**
+ * Итератор для обхода элементов семейного древа.
+ */
+public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Iterator<E> {
     private int idx;
-    private List<Human> familyTreeList;
+    private List<E> familyTreeList;
 
     /**
-     * Конструктор для инициализации итератора.
+     * Конструктор для создания итератора семейного древа.
      */
-    public FamilyTreeIterator(List<Human> familyTreeList) {
+    public FamilyTreeIterator(List<E> familyTreeList) {
         this.familyTreeList = familyTreeList;
+        idx = 0;
     }
 
     /**
-     * Проверяет, есть ли еще элементы для итерации.
+     * Проверяет, есть ли следующий элемент в списке.
      */
     @Override
     public boolean hasNext() {
@@ -26,10 +29,10 @@ public class FamilyTreeIterator implements Iterator<Human> {
     }
 
     /**
-     * Возвращает следующий элемент в последовательности итерации.
+     * Возвращает следующий элемент из списка.
      */
     @Override
-    public Human next() {
+    public E next() {
         return familyTreeList.get(idx++);
     }
 }

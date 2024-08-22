@@ -1,7 +1,6 @@
 package ru.gb.family_tree.family_tree;
 
 import ru.gb.family_tree.human.Gender;
-import ru.gb.family_tree.human.Human;
 import ru.gb.family_tree.iterator.ComparatorByAge;
 import ru.gb.family_tree.iterator.ComparatorByName;
 import ru.gb.family_tree.iterator.FamilyTreeIterator;
@@ -13,39 +12,33 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 /**
- * Класс FamilyTree представляет собой древо семьи, состоящее из объектов класса Human.
- * Предоставляет методы для добавления людей в древо, поиска по идентификатору и имени,
- * а также сортировки и итерации по элементам древа.
+ * Класс FamilyTree представляет собой древо семейных связей.
  */
-public class FamilyTree implements Serializable, Iterable<Human> {
+public class FamilyTree<E extends FamilyTreeElement<E>> implements Serializable, Iterable<E> {
 
-    private long humanId;
-    private List<Human> humanList;
+    private long MemberId;
+    private final List<E> MemberList;
 
     /**
-     * Конструктор по умолчанию, инициализирует пустой список людей.
+     * Конструктор по умолчанию, инициализирующий пустой список членов семьи.
      */
     public FamilyTree() {
-        this.humanList = new ArrayList<>();
+        this.MemberList = new ArrayList<>();
     }
 
     /**
-     * Добавляет человека в семейное древо.
-     * Если человек уже существует в древе, он не будет добавлен.
-     *
-     * @param human объект Human для добавления
-     * @return true, если человек был успешно добавлен, иначе false
+     * Добавляет нового члена семьи в древо.
      */
-    public boolean addHuman(Human human) {
-        if (human == null) {
+    public boolean addMember(E member) {
+        if (member == null) {
             return false;
         }
-        if (!humanList.contains(human)) {
-            humanList.add(human);
-            human.setId(humanId++);
+        if (!MemberList.contains(member)) {
+            MemberList.add(member);
+            member.setId(MemberId++);
 
-            addParentsRelations(human);
-            addChildrenRelations(human);
+            addParentsRelations(member);
+            addChildrenRelations(member);
 
             return true;
         }
@@ -53,85 +46,73 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     /**
-     * Устанавливает связи между ребенком и родителями.
-     *
-     * @param human объект Human для установления родительских связей
+     * Добавляет отношения родителей для данного члена семьи.
      */
-    private void addParentsRelations(Human human) {
-        Human mother = human.getMother();
+    private void addParentsRelations(E member) {
+        E mother = member.getMother();
         if (mother != null) {
-            mother.addChild(human);
+            mother.addChild(member);
         }
 
-        Human father = human.getFather();
+        E father = member.getFather();
         if (father != null) {
-            father.addChild(human);
+            father.addChild(member);
         }
     }
 
     /**
-     * Устанавливает связи между родителями и детьми.
-     *
-     * @param human объект Human для установления детских связей
+     * Добавляет отношения детей для данного члена семьи.
      */
-    private void addChildrenRelations(Human human) {
-        if (human.getChildren().size() > 0) {
-            for (Human child : human.getChildren()) {
-                if (human.getGender() == Gender.female) {
-                    child.setMother(human);
+    private void addChildrenRelations(E member) {
+        if (member.getChildren().size() > 0) {
+            for (E child : member.getChildren()) {
+                if (member.getGender() == Gender.female) {
+                    child.setMother(member);
                 } else {
-                    child.setFather(human);
+                    child.setFather(member);
                 }
             }
         }
     }
 
     /**
-     * Ищет человека по его идентификатору.
-     *
-     * @param id идентификатор человека
-     * @return объект Human, если найден, иначе null
+     * Находит члена семьи по его идентификатору.
      */
-    public Human findById(long id) {
-        for (Human human : humanList) {
-            if (human.getId() == id) {
-                System.out.println(human);
-                return human;
+    public E findById(long id) {
+        for (E member: MemberList) {
+            if (member.getId() == id) {
+                System.out.println(member);
+                return member;
             }
         }
         return null;
     }
 
     /**
-     * Ищет людей по имени.
-     *
-     * @param name имя для поиска
-     * @return список объектов Human с указанным именем
+     * Находит членов семьи по имени.
      */
-    public List<Human> findByName(String name) {
-        List<Human> res = new ArrayList<>();
-        for (Human human : humanList) {
-            if (human.getName().equalsIgnoreCase(name)) {
-                res.add(human);
+    public List<E> findByName(String name) {
+        List<E> res = new ArrayList<>();
+        for (E member: MemberList) {
+            if (member.getName().equalsIgnoreCase(name)) {
+                res.add(member);
             }
         }
-        for (Human human : res) {
-            System.out.println(human);
+        for (E member : res) {
+            System.out.println(member);
         }
         return res;
     }
 
     /**
-     * Возвращает информацию обо всех людях в семейном древе.
-     *
-     * @return строка с информацией о людях в древе
+     * Возвращает информацию о семье.
      */
     public String getAboutFamily() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Humans in family: ");
-        sb.append(humanList.size() + "\n\n------------\nThey are:\n\n");
-        for (Human human : humanList) {
-            sb.append(human);
+        sb.append("Members in family: ");
+        sb.append(MemberList.size() + "\n\n------------\nThey are:\n\n");
+        for (E member : MemberList) {
+            sb.append(member);
             sb.append("\n");
             sb.append("-----------\n");
         }
@@ -140,8 +121,6 @@ public class FamilyTree implements Serializable, Iterable<Human> {
 
     /**
      * Возвращает строковое представление семейного древа.
-     *
-     * @return строка с информацией о семейном древе
      */
     @Override
     public String toString() {
@@ -149,27 +128,24 @@ public class FamilyTree implements Serializable, Iterable<Human> {
     }
 
     /**
-     * Возвращает итератор для обхода семейного древа.
-     *
-     * @return итератор для семейного древа
+     * Возвращает итератор для обхода членов семейного древа.
      */
     @Override
-    public Iterator<Human> iterator() {
-        return new FamilyTreeIterator(humanList);
+    public Iterator<E> iterator() {
+        return new FamilyTreeIterator<>(MemberList);
     }
 
     /**
-     * Сортирует список людей в древе по возрасту.
+     * Сортирует членов семьи по возрасту.
      */
     public void sortByAge() {
-        humanList.sort(new ComparatorByAge());
+        MemberList.sort(new ComparatorByAge<>());
     }
 
     /**
-     * Сортирует список людей в древе по имени.
+     * Сортирует членов семьи по имени.
      */
     public void sortByName() {
-        humanList.sort(new ComparatorByName());
+        MemberList.sort(new ComparatorByName<>());
     }
-
 }

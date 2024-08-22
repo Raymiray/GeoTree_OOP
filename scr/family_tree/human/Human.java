@@ -1,5 +1,7 @@
 package ru.gb.family_tree.human;
 
+import ru.gb.family_tree.family_tree.FamilyTreeElement;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
@@ -9,9 +11,10 @@ import java.time.LocalDate;
 import java.time.Period;
 
 /**
- * Класс представляет человека с его личной информацией и семейными связями.
+ * Класс, представляющий человека в семейном древе.
+ * Реализует интерфейсы Serializable и FamilyTreeElement<Human>.
  */
-public class Human implements Serializable {
+public class Human implements Serializable, FamilyTreeElement<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -21,14 +24,14 @@ public class Human implements Serializable {
     private HashMap<Human, SpouseStatus> spouses = new HashMap<>();
 
     /**
-     * Конструктор для создания объекта Human с полной информацией.
+     * Конструктор класса Human.
      *
-     * @param name   Имя человека.
-     * @param gender Пол человека.
-     * @param dob    Дата рождения.
-     * @param dod    Дата смерти (может быть null, если человек жив).
-     * @param mother Мать человека.
-     * @param father Отец человека.
+     * @param name   имя человека
+     * @param gender пол человека
+     * @param dob    дата рождения
+     * @param dod    дата смерти (может быть null)
+     * @param mother мать человека
+     * @param father отец человека
      */
     public Human(String name, Gender gender, LocalDate dob, LocalDate dod, Human mother, Human father) {
         this.id = -1;
@@ -43,136 +46,121 @@ public class Human implements Serializable {
     }
 
     /**
-     * Конструктор для создания объекта Human без даты смерти.
+     * Конструктор без даты смерти.
      *
-     * @param name   Имя человека.
-     * @param gender Пол человека.
-     * @param dob    Дата рождения.
-     * @param mother Мать человека.
-     * @param father Отец человека.
+     * @param name   имя человека
+     * @param gender пол человека
+     * @param dob    дата рождения
+     * @param mother мать человека
+     * @param father отец человека
      */
     public Human(String name, Gender gender, LocalDate dob, Human mother, Human father) {
         this(name, gender, dob, null, mother, father);
     }
 
     /**
-     * Конструктор для создания объекта Human без родителей.
+     * Конструктор без родителей.
      *
-     * @param name   Имя человека.
-     * @param gender Пол человека.
-     * @param dob    Дата рождения.
-     * @param dod    Дата смерти (может быть null, если человек жив).
+     * @param name   имя человека
+     * @param gender пол человека
+     * @param dob    дата рождения
+     * @param dod    дата смерти
      */
     public Human(String name, Gender gender, LocalDate dob, LocalDate dod) {
         this(name, gender, dob, dod, null, null);
     }
 
     /**
-     * Конструктор для создания объекта Human только с основной информацией.
+     * Конструктор только с именем, полом и датой рождения.
      *
-     * @param name   Имя человека.
-     * @param gender Пол человека.
-     * @param dob    Дата рождения.
+     * @param name   имя человека
+     * @param gender пол человека
+     * @param dob    дата рождения
      */
     public Human(String name, Gender gender, LocalDate dob) {
         this(name, gender, dob, null, null, null);
     }
 
     /**
-     * Возвращает уникальный идентификатор человека.
-     *
-     * @return Идентификатор человека.
+     * Получить ID человека.
      */
     public long getId() {
         return id;
     }
 
     /**
-     * Устанавливает уникальный идентификатор человека.
-     *
-     * @param id Идентификатор человека.
+     * Установить ID человека.
      */
     public void setId(long id) {
         this.id = id;
     }
 
     /**
-     * Печатает идентификатор человека.
+     * Вывести ID человека в консоль.
      */
     public void PrintId() {
         System.out.println("Id: " + this.getId());
     }
 
     /**
-     * Возвращает имя человека.
-     *
-     * @return Имя человека.
+     * Получить имя человека.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Устанавливает имя человека.
-     *
-     * @param name Имя человека.
+     * Установить имя человека.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Печатает имя человека.
+     * Вывести имя человека в консоль.
      */
     public void PrintName() {
         System.out.println("Surname Name Patronymic: " + this.getName());
     }
 
     /**
-     * Возвращает дату рождения человека.
-     *
-     * @return Дата рождения человека.
+     * Получить дату рождения человека.
      */
     public LocalDate getDob() {
         return dob;
     }
 
     /**
-     * Устанавливает дату рождения человека.
-     *
-     * @param dob Дата рождения человека.
+     * Установить дату рождения человека.
      */
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
     /**
-     * Печатает дату рождения человека.
+     * Вывести дату рождения человека в консоль.
      */
     public void PrintDob() {
         System.out.println("Date of Birth (year-month-day): " + this.getDob());
     }
 
     /**
-     * Возвращает дату смерти человека.
-     *
-     * @return Дата смерти человека (может быть null, если человек жив).
+     * Получить дату смерти человека.
      */
     public LocalDate getDod() {
         return dod;
     }
 
     /**
-     * Устанавливает дату смерти человека.
-     *
-     * @param dod Дата смерти человека.
+     * Установить дату смерти человека.
      */
     public void setDod(LocalDate dod) {
         this.dod = dod;
     }
 
     /**
-     * Печатает дату смерти человека или сообщение о том, что он жив.
+     * Вывести дату смерти человека в консоль.
+     * Если дата смерти null, выводится сообщение, что человек жив.
      */
     public void PrintDod() {
         if (dod == null) {
@@ -183,44 +171,35 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает пол человека.
-     *
-     * @return Пол человека.
+     * Получить пол человека.
      */
     public Gender getGender() {
         return gender;
     }
 
     /**
-     * Устанавливает пол человека.
-     *
-     * @param gender Пол человека.
+     * Установить пол человека.
      */
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
     /**
-     * Печатает пол человека.
+     * Вывести пол человека в консоль.
      */
     public void PrintGender() {
         System.out.println("Gender: " + this.getGender());
     }
 
     /**
-     * Возвращает список детей человека.
-     *
-     * @return Список детей человека.
+     * Получить список детей человека.
      */
     public List<Human> getChildren() {
         return children;
     }
 
     /**
-     * Добавляет ребенка в список детей человека.
-     *
-     * @param child Ребенок.
-     * @return true, если ребенок успешно добавлен, иначе false.
+     * Добавить ребенка к человеку.
      */
     public boolean addChild(Human child) {
         if (!children.contains(child)) {
@@ -231,9 +210,7 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает строковое представление списка детей.
-     *
-     * @return Список детей в строковом формате.
+     * Получить строку с информацией о детях человека.
      */
     public String getChildrenAbout() {
         StringBuilder childrenAbout = new StringBuilder();
@@ -251,34 +228,28 @@ public class Human implements Serializable {
     }
 
     /**
-     * Печатает список детей.
+     * Вывести информацию о детях человека в консоль.
      */
     public void PrintChildren() {
         System.out.println(getChildrenAbout());
     }
 
     /**
-     * Возвращает мать человека.
-     *
-     * @return Мать человека.
+     * Получить мать человека.
      */
     public Human getMother() {
         return mother;
     }
 
     /**
-     * Устанавливает мать человека.
-     *
-     * @param mother Мать человека.
+     * Установить мать человека.
      */
     public void setMother(Human mother) {
         this.mother = mother;
     }
 
     /**
-     * Возвращает строковое представление информации о матери человека.
-     *
-     * @return Информация о матери в строковом формате.
+     * Получить строку с информацией о матери человека.
      */
     public String getMotherAbout() {
         String motherAbout = "Mother: ";
@@ -292,34 +263,28 @@ public class Human implements Serializable {
     }
 
     /**
-     * Печатает информацию о матери человека.
+     * Вывести информацию о матери человека в консоль.
      */
     public void PrintMother() {
         System.out.println(getMotherAbout());
     }
 
     /**
-     * Возвращает отца человека.
-     *
-     * @return Отец человека.
+     * Получить отца человека.
      */
     public Human getFather() {
         return father;
     }
 
     /**
-     * Устанавливает отца человека.
-     *
-     * @param father Отец человека.
+     * Установить отца человека.
      */
     public void setFather(Human father) {
         this.father = father;
     }
 
     /**
-     * Возвращает строковое представление информации об отце человека.
-     *
-     * @return Информация об отце в строковом формате.
+     * Получить строку с информацией об отце человека.
      */
     public String getFatherAbout() {
         String fatherAbout = "Father: ";
@@ -333,27 +298,21 @@ public class Human implements Serializable {
     }
 
     /**
-     * Печатает информацию об отце человека.
+     * Вывести информацию об отце человека в консоль.
      */
     public void PrintFather() {
         System.out.println(getFatherAbout());
     }
 
     /**
-     * Возвращает список супругов человека и их статус.
-     *
-     * @return Список супругов и их статус.
+     * Получить карту с супругами человека и их статусами.
      */
     public HashMap<Human, SpouseStatus> getSpouse() {
         return spouses;
     }
 
     /**
-     * Добавляет супруга и его статус.
-     *
-     * @param spouse Супруг.
-     * @param status Статус супруга.
-     * @return true, если супруг успешно добавлен, иначе false.
+     * Добавить супруга к человеку.
      */
     public boolean addSpouse(Human spouse, SpouseStatus status) {
         if (this.spouses.containsKey(spouse)) {
@@ -365,14 +324,11 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает строковое представление списка супругов и их статуса.
-     *
-     * @return Список супругов и их статус в строковом формате.
+     * Получить строку с информацией о супругах человека.
      */
     public String getSpousesAbout() {
         StringBuilder spousesAbout = new StringBuilder();
         spousesAbout.append("Spouses: ");
-
         if (!spouses.isEmpty()) {
             boolean first = true;
             for (Map.Entry<Human, SpouseStatus> entry : spouses.entrySet()) {
@@ -388,23 +344,18 @@ public class Human implements Serializable {
         } else {
             spousesAbout.append("None");
         }
-
         return spousesAbout.toString();
     }
 
     /**
-     * Печатает информацию о супругах.
+     * Вывести информацию о супругах человека в консоль.
      */
     public void PrintSpouses() {
         System.out.println(getSpousesAbout());
     }
 
     /**
-     * Вычисляет количество лет между двумя датами.
-     *
-     * @param dob Дата начала.
-     * @param dod Дата окончания.
-     * @return Количество лет между датами.
+     * Рассчитать интервал в годах между двумя датами.
      */
     private int getInterval(LocalDate dob, LocalDate dod) {
         Period interval = Period.between(dob, dod);
@@ -412,9 +363,9 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает текущий возраст человека.
-     *
-     * @return Возраст человека.
+     * Получить возраст человека.
+     * Если человек жив, возраст считается до текущей даты.
+     * Если умер, возраст считается до даты смерти.
      */
     public int getAge() {
         if (dod == null) {
@@ -425,9 +376,7 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает статус жизни человека (жив или мертв).
-     *
-     * @return Статус жизни человека.
+     * Получить статус жизни человека (жив или мертв).
      */
     public String getLifeStatus() {
         if (dod == null) {
@@ -438,7 +387,7 @@ public class Human implements Serializable {
     }
 
     /**
-     * Печатает текущий возраст и статус жизни человека.
+     * Вывести возраст и статус жизни человека в консоль.
      */
     public void PrintAge() {
         if (dod == null) {
@@ -449,9 +398,7 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает строковое представление объекта Human.
-     *
-     * @return Информация о человеке в строковом формате.
+     * Возвращает строку с полной информацией о человеке.
      */
     @Override
     public String toString() {
@@ -459,9 +406,7 @@ public class Human implements Serializable {
     }
 
     /**
-     * Возвращает полную информацию о человеке.
-     *
-     * @return Полная информация о человеке.
+     * Получить строку с информацией о человеке.
      */
     public String getAbout() {
         StringBuilder sb = new StringBuilder();
@@ -469,19 +414,16 @@ public class Human implements Serializable {
         sb.append(name);
         sb.append("\nGender: ");
         sb.append(getGender());
-        sb.append("\nAge: " + getAge() + ". " + getLifeStatus());
-        sb.append("\n" + getChildrenAbout());
-        sb.append("\n" + getMotherAbout());
-        sb.append("\n" + getFatherAbout());
-        sb.append("\n" + getSpousesAbout());
+        sb.append("\nAge: ").append(getAge()).append(". ").append(getLifeStatus());
+        sb.append("\n").append(getChildrenAbout());
+        sb.append("\n").append(getMotherAbout());
+        sb.append("\n").append(getFatherAbout());
+        sb.append("\n").append(getSpousesAbout());
         return sb.toString();
     }
 
     /**
-     * Проверяет равенство объектов Human на основе их идентификаторов.
-     *
-     * @param obj Объект для сравнения.
-     * @return true, если объекты равны, иначе false.
+     * Сравнивает текущий объект с другим объектом на равенство.
      */
     @Override
     public boolean equals(Object obj) {
