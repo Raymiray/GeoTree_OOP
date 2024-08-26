@@ -1,19 +1,19 @@
-package ru.gb.family_tree.iterator;
+package family_tree.model.family_tree.iterators;
 
-import ru.gb.family_tree.family_tree.FamilyTreeElement;
+import family_tree.model.family_tree.FamilyTreeElement;
 
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Итератор для обхода элементов семейного древа.
+ * Итератор для обхода элементов семейного дерева.
  */
 public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Iterator<E> {
     private int idx;
     private List<E> familyTreeList;
 
     /**
-     * Конструктор для создания итератора семейного древа.
+     * Конструктор итератора семейного дерева.
      */
     public FamilyTreeIterator(List<E> familyTreeList) {
         this.familyTreeList = familyTreeList;
