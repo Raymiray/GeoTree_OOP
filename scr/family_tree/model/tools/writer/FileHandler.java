@@ -6,9 +6,7 @@ import family_tree.model.family_tree.FamilyTreeElement;
 import java.io.*;
 
 /**
- * Класс {@code FileHandler} предоставляет методы для записи и чтения
- * объектов семейного дерева в файл и из файла. Этот класс реализует
- * интерфейс {@code Writable}.
+ * Класс FileHandler предоставляет методы для записи и чтения объектов FamilyTree в/из файлов.
  */
 public class FileHandler<E extends FamilyTreeElement<E>> implements Writable {
 
@@ -27,7 +25,7 @@ public class FileHandler<E extends FamilyTreeElement<E>> implements Writable {
     }
 
     /**
-     * Читает объект семейного дерева из файла по указанному пути.
+     * Читает объект FamilyTree из файла по указанному пути.
      */
     @Override
     public FamilyTree<E> read(String path) {

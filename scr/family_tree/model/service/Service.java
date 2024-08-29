@@ -9,29 +9,25 @@ import family_tree.model.tools.writer.FileHandler;
 import java.time.LocalDate;
 
 /**
- * Сервисный класс для работы с семейным деревом.
- * <p>
- * Этот класс предоставляет методы для управления членами семьи,
- * а также для чтения и записи данных в файл.
- * </p>
+ * Класс Service предоставляет методы для управления семейным древом.
  */
 public class Service {
     private FamilyTree<Human> tree;
     private FileHandler<Human> fileHandler = new FileHandler<>();
 
     /**
-     * Конструктор, который инициализирует пустое семейное дерево.
+     * Конструктор по умолчанию. Создает пустое семейное древо.
      */
     public Service() {
         tree = new FamilyTree<>();
     }
 
     /**
-     * Чтение семейного дерева из файла.
+     * Читает семейное древо из файла.
      */
     public boolean read(String path) {
         FamilyTree<Human> treeRead = fileHandler.read(path);
-        if (treeRead == null) {
+        if (treeRead.equals(null)) {
             return false;
         }
         tree = treeRead;
@@ -39,14 +35,14 @@ public class Service {
     }
 
     /**
-     * Запись семейного дерева в файл.
+     * Записывает семейное древо в файл.
      */
     public boolean write(String path) {
         return fileHandler.write(tree, path);
     }
 
     /**
-     * Добавление нового члена семьи.
+     * Добавляет нового члена в семейное древо.
      */
     public boolean addMember(String name, Gender gender, String date) {
         Human human = new Human(name, gender, date);
@@ -55,7 +51,7 @@ public class Service {
     }
 
     /**
-     * Установка даты смерти для члена семьи.
+     * Устанавливает дату смерти члена семейного древа.
      */
     public void setDeathDate(int personId, LocalDate dod) {
         Human human = tree.findById(personId);
@@ -63,7 +59,7 @@ public class Service {
     }
 
     /**
-     * Установка родителя для члена семьи.
+     * Устанавливает родителя для члена семейного древа.
      */
     public void setParent(int memberId, int parentId) {
         Human human = tree.findById(memberId);
@@ -71,7 +67,7 @@ public class Service {
     }
 
     /**
-     * Установка супруга/супруги для члена семьи.
+     * Устанавливает супруга для члена семейного древа.
      */
     public void setSpouse(int firstMemberId, int secondMemberId, SpouseStatus spouseStatus) {
         Human human = tree.findById(firstMemberId);
@@ -79,21 +75,21 @@ public class Service {
     }
 
     /**
-     * Проверка существования члена семьи по идентификатору.
+     * Проверяет наличие члена семейного древа по идентификатору.
      */
     public boolean checkById(int id) {
         return tree.checkById(id);
     }
 
     /**
-     * Получение строки, представляющей семейное дерево.
+     * Возвращает информацию о семейном древе.
      */
     public String getAboutFamily() {
         return tree.toString();
     }
 
     /**
-     * Сортировка членов семьи по возрасту и получение строки, представляющей отсортированное дерево.
+     * Сортирует семейное древо по возрасту и возвращает его информацию.
      */
     public String sortTreeByAge() {
         tree.sortByAge();
@@ -101,7 +97,7 @@ public class Service {
     }
 
     /**
-     * Сортировка членов семьи по имени и получение строки, представляющей отсортированное дерево.
+     * Сортирует семейное древо по имени и возвращает его информацию.
      */
     public String sortTreeByName() {
         tree.sortByName();

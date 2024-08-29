@@ -1,11 +1,16 @@
 package family_tree.view.menus;
 
 import family_tree.view.ConsoleUI;
-
 import family_tree.view.commands.*;
 
-
+/**
+ * Главное меню MainMenu представляет собой меню с основными командами для работы с приложением.
+ */
 public class MainMenu extends Menu {
+
+    /**
+     * Конструктор класса MainMenu.
+     */
     public MainMenu(ConsoleUI consoleUI) {
         super(consoleUI);
         commandList.add(new GetAboutFamily(consoleUI));
@@ -18,6 +23,3 @@ public class MainMenu extends Menu {
         commandList.add(new Finish(consoleUI));
     }
 }
-
-
-//-------------------------------------------------------

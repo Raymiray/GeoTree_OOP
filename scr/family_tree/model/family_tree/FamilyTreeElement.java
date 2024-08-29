@@ -1,7 +1,6 @@
 package family_tree.model.family_tree;
 
 import family_tree.model.human.Gender;
-import family_tree.model.human.Human;
 import family_tree.model.human.SpouseStatus;
 
 import java.io.Serializable;
@@ -10,24 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Интерфейс для элементов генеалогического древа.
+ * Интерфейс FamilyTreeElement представляет элемент семейного древа.
  */
 public interface FamilyTreeElement<T> extends Serializable {
 
     /**
-     * Возвращает идентификатор элемента.
+     * Возвращает уникальный идентификатор элемента.
      */
     long getId();
 
     /**
-     * Устанавливает идентификатор элемента.
+     * Устанавливает уникальный идентификатор элемента.
      */
     void setId(long id);
-
-    /**
-     * Печатает идентификатор элемента.
-     */
-    void PrintId();
 
     /**
      * Возвращает имя элемента.
@@ -40,11 +34,6 @@ public interface FamilyTreeElement<T> extends Serializable {
     void setName(String name);
 
     /**
-     * Печатает имя элемента.
-     */
-    void PrintName();
-
-    /**
      * Возвращает дату рождения элемента.
      */
     LocalDate getDob();
@@ -53,11 +42,6 @@ public interface FamilyTreeElement<T> extends Serializable {
      * Устанавливает дату рождения элемента.
      */
     void setDob(LocalDate dob);
-
-    /**
-     * Печатает дату рождения элемента.
-     */
-    void PrintDob();
 
     /**
      * Возвращает дату смерти элемента.
@@ -70,11 +54,6 @@ public interface FamilyTreeElement<T> extends Serializable {
     void setDod(LocalDate dod);
 
     /**
-     * Печатает дату смерти элемента.
-     */
-    void PrintDod();
-
-    /**
      * Возвращает пол элемента.
      */
     Gender getGender();
@@ -85,17 +64,12 @@ public interface FamilyTreeElement<T> extends Serializable {
     void setGender(Gender gender);
 
     /**
-     * Печатает пол элемента.
-     */
-    void PrintGender();
-
-    /**
      * Возвращает список детей элемента.
      */
     List<T> getChildren();
 
     /**
-     * Добавляет ребенка в список детей элемента.
+     * Добавляет ребенка к элементу.
      */
     boolean addChild(T child);
 
@@ -103,11 +77,6 @@ public interface FamilyTreeElement<T> extends Serializable {
      * Возвращает информацию о детях элемента.
      */
     String getChildrenAbout();
-
-    /**
-     * Печатает информацию о детях элемента.
-     */
-    void PrintChildren();
 
     /**
      * Возвращает мать элемента.
@@ -125,11 +94,6 @@ public interface FamilyTreeElement<T> extends Serializable {
     String getMotherAbout();
 
     /**
-     * Печатает информацию о матери элемента.
-     */
-    void PrintMother();
-
-    /**
      * Возвращает отца элемента.
      */
     T getFather();
@@ -145,22 +109,17 @@ public interface FamilyTreeElement<T> extends Serializable {
     String getFatherAbout();
 
     /**
-     * Печатает информацию об отце элемента.
-     */
-    void PrintFather();
-
-    /**
      * Добавляет родителя к элементу.
      */
     void addParent(T parent);
 
     /**
-     * Возвращает супругов элемента и их статус.
+     * Возвращает супруга(-у) элемента и их статус.
      */
     HashMap<T, SpouseStatus> getSpouse();
 
     /**
-     * Добавляет супруга к элементу.
+     * Добавляет супруга(-у) к элементу.
      */
     void addSpouse(T spouse, SpouseStatus status);
 
@@ -168,11 +127,6 @@ public interface FamilyTreeElement<T> extends Serializable {
      * Возвращает информацию о супругах элемента.
      */
     String getSpousesAbout();
-
-    /**
-     * Печатает информацию о супругах элемента.
-     */
-    void PrintSpouses();
 
     /**
      * Возвращает возраст элемента.
@@ -183,11 +137,6 @@ public interface FamilyTreeElement<T> extends Serializable {
      * Возвращает статус жизни элемента.
      */
     String getLifeStatus();
-
-    /**
-     * Печатает возраст элемента.
-     */
-    void PrintAge();
 
     /**
      * Возвращает информацию об элементе.

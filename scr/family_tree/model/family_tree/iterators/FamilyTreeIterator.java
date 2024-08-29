@@ -13,7 +13,7 @@ public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Itera
     private List<E> familyTreeList;
 
     /**
-     * Конструктор итератора семейного дерева.
+     * Конструктор инициализирует итератор списком элементов семейного дерева.
      */
     public FamilyTreeIterator(List<E> familyTreeList) {
         this.familyTreeList = familyTreeList;
@@ -29,7 +29,7 @@ public class FamilyTreeIterator<E extends FamilyTreeElement<E>> implements Itera
     }
 
     /**
-     * Возвращает следующий элемент из списка.
+     * Возвращает следующий элемент в списке.
      */
     @Override
     public E next() {

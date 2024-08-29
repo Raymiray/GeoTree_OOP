@@ -7,15 +7,13 @@ import family_tree.view.View;
 
 import java.time.LocalDate;
 
-/**
- * Класс {@code Presenter} представляет собой контроллер для работы с данными семьи.
- */
+
 public class Presenter {
     private View view;
     private Service service;
 
     /**
-     * Конструктор для создания экземпляра {@code Presenter}.
+     * Конструктор класса Presenter.
      */
     public Presenter(View view) {
         this.view = view;
@@ -31,7 +29,7 @@ public class Presenter {
     }
 
     /**
-     * Устанавливает дату смерти для указанного члена семьи.
+     * Устанавливает дату смерти для члена семьи по его идентификатору.
      */
     public boolean setDeathDate(int personId, LocalDate dod) {
         if (service.checkById(personId)) {
@@ -42,11 +40,11 @@ public class Presenter {
     }
 
     /**
-     * Устанавливает родителя для указанного члена семьи.
+     * Устанавливает родителя для члена семьи по его идентификатору.
      */
     public boolean setParent(int memberId, int parentId){
         if (service.checkById(memberId) & service.checkById(parentId)){
-            service.setParent(memberId,parentId);
+            service.setParent(memberId, parentId);
             return true;
         }
         return false;
@@ -64,35 +62,35 @@ public class Presenter {
     }
 
     /**
-     * Получает информацию о семье и отображает ее через представление.
+     * Получает информацию о всей семье и передает её в представление.
      */
     public void getAboutFamily() {
         view.printAnswer(service.getAboutFamily());
     }
 
     /**
-     * Сортирует семейное дерево по возрасту и отображает результат через представление.
+     * Сортирует членов семьи по возрасту и передает отсортированный список в представление.
      */
     public void sortTreeByAge() {
         view.printAnswer(service.sortTreeByAge());
     }
 
     /**
-     * Сортирует семейное дерево по имени и отображает результат через представление.
+     * Сортирует членов семьи по имени и передает отсортированный список в представление.
      */
     public void sortTreeByName() {
         view.printAnswer(service.sortTreeByName());
     }
 
     /**
-     * Считывает данные семьи из файла.
+     * Считывает данные из файла и обновляет состояние сервиса.
      */
     public boolean read(String path) {
         return service.read(path);
     }
 
     /**
-     * Записывает данные семьи в файл.
+     * Записывает данные в файл.
      */
     public boolean write(String path) {
         return service.write(path);
